@@ -1,39 +1,43 @@
 import React, { Component } from 'react'
 import { View,Text,SafeAreaView,ScrollView,FlatList,TouchableOpacity,StyleSheet,ImageBackground,Image } from 'react-native'
 import {pxToDp} from '../../utils/stylesKits';
-export default class Home extends Component {
-    state = {
+ const App = ()=>{
+    const state = {
       data:[
         {
           id:1,
+          title:'拍照互动',
           src :require('./img/photo.png'),
         },
         {
           id:2,
+          title:'不如跳舞',
+
           src :require('./img/tiaowu.png'),
         },
         {
           id:3,
+          title:'拍照互动',
+
           src :require('./img/jiashi.png'),
         },
         {
           id:4,
+          title:'激光追踪',
           src :require('./img/jiguang.png'),
         },
       ]
   }
-   
-
-  render() {
-    const {data} = this.state
-    const  Item = ({ item, onPress }) => (
+    const {data} = state
+    const  CardItem = ({ item, onPress }) => (
       <TouchableOpacity onPress={onPress}  style={cardStyles.container} >
-        <Image source={item.src} style={cardStyles.cardItem}  ></Image>
+        <Image source={item.src} style={cardStyles.cardItem}></Image>
+        <Text style={cardStyles.txt}>{item.title}</Text>
       </TouchableOpacity>
     );
     const renderItem = ({ item }) => {
       return (
-        <Item
+        <CardItem
           item={item}
           onPress={() => setSelectedId(item.id)}
         />
@@ -55,29 +59,34 @@ export default class Home extends Component {
             {/* header结束 */}
             {/* card */}
             <FlatList
-            horizontal={true}
+              horizontal={true}
               data={data}
               renderItem={renderItem}
               keyExtractor={item => item}
             />
-            {/* <View style={cardStyles.container}>
-                
-                <TouchableOpacity  style={cardStyles.cardItem}><Image source={require('./img/tiaowu.png')}></Image></TouchableOpacity>
-                <TouchableOpacity style={cardStyles.cardItem}><Image source={require('./img/jiashi.png')}></Image></TouchableOpacity>
-                <TouchableOpacity style={cardStyles.cardItem}><Image source={require('./img/jiguang.png')}></Image></TouchableOpacity>
-            </View> */}
+            {/* card结束 */}
+            {/* banner */}
+            <View style={bannerStyles.bannerWarp}>
+              <ImageBackground style={bannerStyles.killWarp} source={require('./img/jinengshu-bg.png')}>
+                <Text style={bannerStyles.killH1}>技能书</Text>
+                <Text style={bannerStyles.killP}>今日啥清热哦开口咖啡刀客个任务</Text>
+                <View style={bannerStyles.killBtn}><Text>快来看看</Text></View>
+              </ImageBackground>
+            </View>
+
           </ScrollView>
         </SafeAreaView> 
        </ImageBackground>   
        )
-  }
+ 
 }
 const styles = StyleSheet.create({
   container:{
   flex:1,
   paddingTop: pxToDp(15),
-  paddingRight:pxToDp(122),
-  paddingLeft:pxToDp(56)
+  paddingLeft:pxToDp(56),
+  paddingRight:pxToDp(104),
+
   },
   headWarp:{
     flexDirection:'row',
@@ -92,12 +101,10 @@ const styles = StyleSheet.create({
     
   },
   headBtn:{
-    // width:100,
-    // height:50,
     paddingTop:pxToDp(3),
     paddingBottom:pxToDp(3),
-    paddingRight:pxToDp(10),
     paddingLeft:pxToDp(10),
+    paddingRight:pxToDp(10),
     borderRadius:pxToDp(26),
     flexDirection:'row',
     alignItems:'center',
@@ -131,10 +138,48 @@ const cardStyles = StyleSheet.create({
     flexDirection:'row',
     marginTop:pxToDp(20),
     overflow:'auto',
-    
+    position:'relative',
   },
    cardItem:{
     marginRight:pxToDp(20)
+   },
+   txt:{
+    position:'absolute',
+    left:pxToDp(17),
+    top:pxToDp(29),
+    color:"#fff",
+    fontSize:pxToDp(32),
+    fontWeight:'bold'
    }
 })
+const bannerStyles = StyleSheet.create({
+  bannerWarp:{
+    marginTop:pxToDp(40),
+  },
+  killWarp:{
+    width:pxToDp(226),
+    height:pxToDp(194),
+    justifyContent:'space-between',
+    paddingTop:pxToDp(25),
+    paddingLeft:pxToDp(20),
+    paddingRight:pxToDp(38),
+    paddingBottom:pxToDp(38),
+    
+  },
+  killH1:{
+    color:"#fff",
+    fontSize:pxToDp(32),
+    fontWeight:'bold'
+  },
+  killP:{
+    fontSize:pxToDp(14),
+    color:' rgba(255,255,255,0.9500)',
+    lineHeight: pxToDp(21)
+  },
+  killBtn:{
+
+  }
+})
+
+export default App
 
