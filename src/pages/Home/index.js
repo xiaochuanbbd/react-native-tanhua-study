@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
-import { View,Text,SafeAreaView,ScrollView,FlatList,TouchableOpacity,StyleSheet,ImageBackground,Image } from 'react-native'
+import { View,Text,SafeAreaView,BVLinearGradient,ScrollView,FlatList,TouchableOpacity,StyleSheet,ImageBackground,Image, Button } from 'react-native'
 import {pxToDp} from '../../utils/stylesKits';
+import LinearGradientBtn from '../../components/LinearGradientBtn'
+import Swiper from 'react-native-swiper';
+
  const App = ()=>{
     const state = {
       data:[
@@ -43,8 +46,25 @@ import {pxToDp} from '../../utils/stylesKits';
         />
       );
     };
-    const   setSelectedId=(id)=>{
+    const ListItem = ({item,onPress})=>(
+      <TouchableOpacity onPress={onPress}   style={listStyles.container} >
+      <Image source={item.src} style={listStyles.listItem}></Image>
+      <Text style={listStyles.txt}>{item.title}</Text>
+    </TouchableOpacity>
+    )
+    const renderListItem = ({item})=>{
+      return (
+        <ListItem
+          item={item}
+          onPress={() => selectList(item.id)}
+        />
+      );
+    }
+    const  setSelectedId=(id)=>{
       console.log(id);
+    }
+    const selectList = (id)=>{
+      console.log('list'+id);
     }
     return (
        <ImageBackground style={ styles.container} source={require('./img/home-bg.png')}>
@@ -62,7 +82,7 @@ import {pxToDp} from '../../utils/stylesKits';
               horizontal={true}
               data={data}
               renderItem={renderItem}
-              keyExtractor={item => item}
+              keyExtractor={item => item.id}
             />
             {/* card结束 */}
             {/* banner */}
@@ -70,8 +90,46 @@ import {pxToDp} from '../../utils/stylesKits';
               <ImageBackground style={bannerStyles.killWarp} source={require('./img/jinengshu-bg.png')}>
                 <Text style={bannerStyles.killH1}>技能书</Text>
                 <Text style={bannerStyles.killP}>今日啥清热哦开口咖啡刀客个任务</Text>
-                <View style={bannerStyles.killBtn}><Text>快来看看</Text></View>
+               <TouchableOpacity> 
+                <LinearGradientBtn 
+                  start={[0.1, 0.1]}
+                  linearStyle={bannerStyles.linearWarp}
+                  colors={['#FF8636', '#FF8636']}
+                  TextStyle={bannerStyles.linearText}
+                  txt={'快来看看'}
+                  ></LinearGradientBtn>
+               </TouchableOpacity>
               </ImageBackground>
+              <Swiper
+              
+                       style={bannerStyles.swiper}
+                        height={220}
+                        horizontal={true}
+                        autoplay={true}
+                        loop={true}
+                        showsPagination={true} 
+                        paginationStyle={{bottom: pxToDp(10)}}
+                        dotStyle={{backgroundColor:'#fff',width:pxToDp(6),height:pxToDp(6)}}
+                        activeDotStyle={{backgroundColor:'#ef8b4a',width:pxToDp(16),height:pxToDp(6)}}
+                        showsButtons={false}
+                      >
+                  <Image source={require('./img/jiashi.png')}></Image>
+                  <Image source={require('./img/jiguang.png')}></Image>
+                  <Image source={require('./img/jiashi.png')}></Image>
+                  <Image source={require('./img/tiaowu.png')}></Image>
+              </Swiper>
+            </View>
+            {/* banner结束 */}
+            {/* 列表 */}
+            <View style={ListStyle.ListWarp}>
+            <FlatList
+               numColumns={2}
+              horizontal={false}
+              data={data}
+              renderItem={renderListItem}
+              keyExtractor={item => item.id}
+              columnWrapperStyle={{marginBottom:pxToDp(20)}}
+            />
             </View>
 
           </ScrollView>
@@ -81,11 +139,10 @@ import {pxToDp} from '../../utils/stylesKits';
  
 }
 const styles = StyleSheet.create({
+   
   container:{
   flex:1,
   paddingTop: pxToDp(15),
-  paddingLeft:pxToDp(56),
-  paddingRight:pxToDp(104),
 
   },
   headWarp:{
@@ -97,7 +154,7 @@ const styles = StyleSheet.create({
     width:pxToDp(40),
     height:pxToDp(40),
     backgroundColor:'#eee',
-    borderRadius:'50%',
+    borderRadius:50,
     
   },
   headBtn:{
@@ -129,7 +186,7 @@ const styles = StyleSheet.create({
     width:pxToDp(36),
     height:pxToDp(36),
     backgroundColor:'#eee',
-    borderRadius:'50%'
+    borderRadius:50
   }
 
 })
@@ -155,6 +212,10 @@ const cardStyles = StyleSheet.create({
 const bannerStyles = StyleSheet.create({
   bannerWarp:{
     marginTop:pxToDp(40),
+    flexDirection:'row',
+    alignItems:'center',
+    justifyContent:"space-between",
+    height:pxToDp(194)
   },
   killWarp:{
     width:pxToDp(226),
@@ -164,6 +225,7 @@ const bannerStyles = StyleSheet.create({
     paddingLeft:pxToDp(20),
     paddingRight:pxToDp(38),
     paddingBottom:pxToDp(38),
+    marginRight:pxToDp(20)
     
   },
   killH1:{
@@ -176,10 +238,49 @@ const bannerStyles = StyleSheet.create({
     color:' rgba(255,255,255,0.9500)',
     lineHeight: pxToDp(21)
   },
-  killBtn:{
-
+  linearWarp:{
+     padding: 10, 
+    marginTop:pxToDp(5),
+    alignItems: 'center',
+   borderRadius: pxToDp(26) 
+  },
+  linearText:{
+    backgroundColor: 'transparent',
+    fontSize: pxToDp(16),
+    color: '#fff',
+    fontWeight:'bold'
+  },
+  swiperWarp:{
+    flex:1,
+  }
+ 
+})
+const ListStyle =StyleSheet.create({
+  ListWarp:{
+    marginTop:pxToDp(20)
   }
 })
+const listStyles = StyleSheet.create({
+  container:{
+    width:'48%',
+    backgroundColor:'#4662ce',
+    borderRadius:pxToDp(24),
+    padding:pxToDp(12),
+    marginRight:pxToDp(20),
+
+    justifyContent:'space-between'
+  },
+  listItem:{
+    width:'100%',
+    height:pxToDp(160),
+  },
+  txt:{
+    fontSize:pxToDp(14),
+    color:'#e7ecff',
+    textAlign:'center',
+
+  }
+}) 
 
 export default App
 

@@ -5,35 +5,9 @@ import {pxToDp} from '../src/utils/stylesKits'
 import Home from './pages/Home';
 import Shequ from './pages/Shequ';
 import Biancheng from './pages/Biancheng';
-import { color } from '@rneui/base';
-export default class tabbar extends Component {
+export default class Tabbar extends Component {
     state = {
-      pages:[
-        {
-          selected:'home',
-          title:'首页',
-          renderIcon:() => <Image style={styles.icon} source={require('../assets/tabbar/home-d.png')} />,
-          renderSelectedIcon:() => <Image style={styles.icon}  source={require('../assets/tabbar/home-a.png')} />,
-          onPress:() => this.setState({ selectedTab: 'home' }),
-          component:Home,
-        },
-        {
-          selected:'shequ',
-          title:'社区',
-          renderIcon:() => <Image style={styles.icon} source={require('../assets/tabbar/shequ-d.png')} />,
-          renderSelectedIcon:() => <Image style={styles.icon}  source={require('../assets/tabbar/shequ-a.png')} />,
-          onPress:() => this.setState({ selectedTab: 'shequ' }),
-          component:Shequ,
-        },
-        {
-          selected:'biancheng',
-          title:'编程',
-          renderIcon:() => <Image style={styles.icon} source={require('../assets/tabbar/biancheng-d.png')} />,
-          renderSelectedIcon:() => <Image style={styles.icon}  source={require('../assets/tabbar/biancheng-a.png')} />,
-          onPress:() => this.setState({ selectedTab: 'biancheng' }),
-          component:Biancheng,
-        }
-      ],
+     
       selectedTab:'home',
   }
   render() {
@@ -41,19 +15,10 @@ export default class tabbar extends Component {
     return (
      <View  style={{flex:1,width:'100%',height:'100%'}}>
      <TabNavigator   tabBarStyle={styles.container}>
-            {/* { pages.map((page,i)=>  <TabNavigator.Item key={i}
-                  selected={selectedTab==page.selected}
-                  title={page.title}
-                  renderIcon={page.renderIcon}
-                  renderSelectedIcon={page.renderSelectedIcon}
-                  onPress={page.onPress}
-                  titleStyle={{color:'#7D93E8',fontSize:'14px'}}
-                  selectedTitleStyle={{color:'#DBE2FF',fontSize:'14px'}}
-                  >
-                </TabNavigator.Item>)}   */}
+            
        <TabNavigator.Item 
-          titleStyle={{color:'#7D93E8',fontSize:'14px'}}
-          selectedTitleStyle={{color:'#DBE2FF',fontSize:'14px'}}
+          titleStyle={{color:'#7D93E8',fontSize:pxToDp(14)}}
+          selectedTitleStyle={{color:'#DBE2FF',fontSize:pxToDp(14)}}
           selected={this.state.selectedTab === 'home'}
           title="首页"
           renderIcon={() => <Image style={styles.icon} source={require('../assets/tabbar/home-d.png')} />}
@@ -62,8 +27,8 @@ export default class tabbar extends Component {
         <Home/> 
         </TabNavigator.Item>
        <TabNavigator.Item
-          titleStyle={{color:'#7D93E8',fontSize:'14px'}}
-          selectedTitleStyle={{color:'#DBE2FF',fontSize:'14px'}}
+          titleStyle={{color:'#7D93E8',fontSize:pxToDp(14)}}
+          selectedTitleStyle={{color:'#DBE2FF',fontSize:pxToDp(14)}}
           selected={this.state.selectedTab === 'shequ'}
           title="社区"
           renderIcon={() => <Image style={styles.icon}  source={require('../assets/tabbar/shequ-d.png')} />}
@@ -73,8 +38,8 @@ export default class tabbar extends Component {
           <Shequ/> 
         </TabNavigator.Item>
         <TabNavigator.Item
-          titleStyle={{color:'#7D93E8',fontSize:'14px'}}
-          selectedTitleStyle={{color:'#DBE2FF',fontSize:'14px'}}
+          titleStyle={{color:'#7D93E8',fontSize:pxToDp(14)}}
+          selectedTitleStyle={{color:'#DBE2FF',fontSize:pxToDp(14)}}
           selected={this.state.selectedTab === 'biancheng'}
           title="编程"
           renderIcon={() => <Image style={styles.icon}  source={require('../assets/tabbar/biancheng-d.png')} />}
@@ -91,7 +56,6 @@ export default class tabbar extends Component {
 }
 const styles = StyleSheet.create({
   container:{
-     
   },
   icon:{
     width:pxToDp(32),

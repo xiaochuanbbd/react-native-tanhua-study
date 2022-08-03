@@ -1,7 +1,12 @@
 import React, { Component } from 'react'
 import { View,Text} from 'react-native'
 import Nav from './src/nav'
-import second from './src/mock'
+import {LogBox} from "react-native";
+
+LogBox.ignoreLogs([
+"ViewPropTypes will be removed",
+"ColorPropType will be removed",
+])
  class App extends Component {
   render() {
     return (
