@@ -12,7 +12,7 @@ export class Index extends Component {
   render() {
     return (
       <View   style={{width:'100%',height:'100%' ,overflow:'hidden',...this.props.style}}>
-        <Button onPress={this.props.onPress}   title={this.props.title}  color={this.props.btnTextColor}> </Button>
+        <Button disabled={this.props.disabled} onPress={this.props.onPress}   title={this.props.title}  color={this.props.btnTextColor}> </Button>
       </View>
     )
   }

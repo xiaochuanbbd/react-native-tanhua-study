@@ -5,4 +5,4 @@ import {Dimensions} from 'react-native'
 export const screenWidth = Dimensions.get('window').width //手机屏幕宽度
 export const screenHeight = Dimensions.get('window').height
 
-export const pxToDp = (elePx)=> screenWidth * elePx / 812
+export const pxToDp = (elePx)=> screenWidth * elePx / 375

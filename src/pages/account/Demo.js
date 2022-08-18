@@ -1,11 +1,9 @@
-import React, {useState} from 'react';
-import {SafeAreaView, Text, StyleSheet} from 'react-native';
+import React,{useState} from 'react';
+import {  Text, StyleSheet} from 'react-native';
  
 import {
   CodeField,
   Cursor,
-  useBlurOnFulfill,
-  useClearByFocusCell,
 } from 'react-native-confirmation-code-field';
  
 const styles = StyleSheet.create({
@@ -17,34 +15,26 @@ const styles = StyleSheet.create({
     height: 40,
     lineHeight: 38,
     fontSize: 24,
-    borderWidth: 2,
-    borderColor: '#00000030',
-    textAlign: 'center',
+    borderWidth:2,
+    borderColor: '#7d53ea',
+    // borderBottomWidth:2,
+    color:'#7d53ea',
+    textAlign:'center'
+
   },
   focusCell: {
-    borderColor: '#000',
+    borderColor: '#7d53ea',
   },
 });
  
-const CELL_COUNT = 6;
  
 const App = () => {
   const [value, setValue] = useState('');
-  const ref = useBlurOnFulfill({value, cellCount: CELL_COUNT});
-  const [props, getCellOnLayoutHandler] = useClearByFocusCell({
-    value,
-    setValue,
-  });
- 
   return (
-    <SafeAreaView style={styles.root}>
-      <Text style={styles.title}>Verification</Text>
       <CodeField
-        ref={ref}
-        {...props}
         value={value}
         onChangeText={setValue}
-        cellCount={CELL_COUNT}
+        cellCount={6}
         rootStyle={styles.codeFiledRoot}
         keyboardType="number-pad"
         textContentType="oneTimeCode"
@@ -52,12 +42,11 @@ const App = () => {
           <Text
             key={index}
             style={[styles.cell, isFocused && styles.focusCell]}
-            onLayout={getCellOnLayoutHandler(index)}>
+          >
             {symbol || (isFocused ? <Cursor /> : null)}
           </Text>
         )}
       />
-    </SafeAreaView>
   );
 };
  
