@@ -46,8 +46,9 @@ export default class EngineeringCar extends Component {
       {
         index:4,
       }
-    ],
-    openCamera:false,
+      ],
+      openCamera:false,
+      openSteeringBtn:true,
     }
     //点击icon
     actBtnHandler= (index)=>{
@@ -146,13 +147,23 @@ export default class EngineeringCar extends Component {
           console.log(this.state.actIndex);
      } 
     }
+    //滑动方向盘， 添加actinidex 
+    actionSteeringWheel = (index)=>{
+      this.setState({actIndex:index})
+    }
     //打开摄像头
     openCameraHanlder=(flag)=>{
-      console.log(flag);
        this.setState({openCamera:!this.state.openCamera})
     }
+    changeopenSteeringBtn = (flag)=>{
+      this.setState({openSteeringBtn:flag})
+    }
+    SteeringWheel = ()=>{
+      const {  actIndex}  = this.state
+      return  <SteeringWheel  actIndex={actIndex}  actionSteeringWheel={this.actionSteeringWheel}/> 
+    }
   render() {
-     const { btnForbidden,actIndex,iconsBtn,steeringWheelBtn,openCamera}  = this.state
+     const { btnForbidden,actIndex,iconsBtn,openCamera,openSteeringBtn,steeringWheelBtn}  = this.state
     return (
       <View style={{flex:1,justifyContent:'space-between'}}>
       {/* hedder */}
@@ -162,9 +173,11 @@ export default class EngineeringCar extends Component {
         </ImageBackground>
         {/* middle */}
         <View style={styles.middleContainer}>
-        {/* 左边控制 */}
-          <SteeringWheel actonPressOut={this.actonPressOut} actonPressIn={this.actonPressIn} btnForbidden={btnForbidden}  actIndex={actIndex}  steeringWheelBtn={steeringWheelBtn}></SteeringWheel>
-          {/* <Image style={{alignItems:'center',width: 282,height:162}} source={require('./img/middle_m.png')}></Image> */}
+        {/* 左边方向盘*/}
+          {openSteeringBtn
+          ?<SteeringWheel  actIndex={actIndex}  actionSteeringWheel={this.actionSteeringWheel}/> 
+          :<Buttons actonPressOut={this.actonPressOut} actonPressIn={this.actonPressIn} btnForbidden={btnForbidden}  actIndex={actIndex}  steeringWheelBtn={steeringWheelBtn}/>
+          }
           {/* 右边的active */}
           <IconsBtn actBtnHandler={this.actBtnHandler} btnForbidden={btnForbidden} actIndex={actIndex} iconsBtn={iconsBtn}></IconsBtn>
         </View>
@@ -174,7 +187,7 @@ export default class EngineeringCar extends Component {
 
           <View style={styles.positonFotterWarp}>
             <Image style={{height:21}} source={require('./img/footer_left2.png')}></Image>
-            <FooterIcons></FooterIcons>
+            <FooterIcons changeopenSteeringBtn={this.changeopenSteeringBtn} openSteeringBtn={openSteeringBtn}></FooterIcons>
             <Image style={{height:21}} source={require('./img/footer_left2.png')}></Image>
           </View>
         <Image style={{width:55,height:110,position:'absolute',right:0,bottom:0,transform:[ {rotateY:'180deg'}]}} source={require('./img/footer_left.png')}></Image>

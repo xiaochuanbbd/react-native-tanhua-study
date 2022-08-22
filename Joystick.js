@@ -5,7 +5,7 @@ const Joystick = () => {
   const [highlight, setHighlight] = useState("red");
   const [pan, setPan] = useState({ x: 0, y: 0 });
   const panResponder = useRef(
-    PanResponder.create({
+    PanResponder.create({       
       onMoveShouldSetPanResponder: () => true,
       onPanResponderGrant: () => {
         setHighlight("green");
