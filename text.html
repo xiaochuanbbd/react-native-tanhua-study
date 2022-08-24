@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="https://cdn.shopify.com/s/files/1/0260/2935/9194/t/10/assets/jquery-3.5.1.min.js"></script>
+  <style>
+  .direct {
+	width: 200px;
+	height: 200px;
+	background-color: gray;
+	text-align: center;
+	position: relative;
+}
+.line {
+	width: 10px;
+	position: absolute;
+	top: 45%;
+	left: 45%;
+	display: inline-block;
+	transform: rotate(45deg);
+}
+
+      </style>
+</head>
+<body>
+  <div class="direct">
+    <canvas id="range"></canvas>
+    <hr class="line">
+  </div>
+  
+</body>
+<script>
+  // 获取到页面元素
+let div = document.querySelector('div.direct')
+let line = document.querySelector('hr.line')
+// 定位中心点的位置
+const ox = div.offsetWidth / 2, oy = div.offsetHeight / 2
+console.log('====================================');
+console.log(div.offsetWidth);
+console.log('====================================');
+// 绘制图形的函数
+let draw = function (a) {
+	if (a > 45 && a <= 120) {
+		return
+	}
+	let canvas = document.querySelector('#range')
+	let ctx = canvas.getContext("2d")
+	ctx.clearRect(0, 0, 200, 200)
+	ctx.beginPath()
+	// 画背景
+	ctx.arc(100,100, 50, 125 * Math.PI / 180,405 * Math.PI / 180)
+	ctx.strokeStyle = "#fff";
+	ctx.fillStyle = "gray";
+	ctx.lineWidth = 10
+	ctx.lineCap = "round"
+	ctx.stroke()
+	// 画进度条
+	ctx.beginPath()
+	ctx.arc(100,100, 50, 120 * Math.PI / 180 , a * Math.PI / 180)
+	ctx.lineWidth = 10
+	ctx.strokeStyle = "blue";
+	ctx.lineCap = "round"
+	ctx.stroke()
+}
+draw(125)
+// 监听鼠标移动时，计算出相对x轴的夹角，从而得到进度
+div.onmousemove = function (e) {
+	// 转换坐标系得到以 （ox, oy） 为圆心的相对坐标
+	let x = e.offsetX - ox
+	let y = oy - e.offsetY
+	// 根据两点间距离公式计算出鼠标点到圆心的距离
+	let r = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2))
+	// 根据三角函数 cos a = x / r， 反推出a的值，得到旋转的角度
+	let a = Math.acos((x / r)) * 180 / Math.PI
+	// 不同的坐标系中角度变化不同，需要做一下判断
+	if (y >= 0) {
+    a=-a
+		line.style.transform = `rotate(${a}deg)`
+		// draw(-a)
+	} else {
+		line.style.transform = `rotate(${a}deg)`
+		// draw(a)
+	}
+  console.log(a);
+
+	
+}
+
+     </script>
+</html>
