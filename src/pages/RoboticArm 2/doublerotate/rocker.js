@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {ImageBackground,Animated,TouchableOpacity,findNodeHandle,UIManager,PanResponder,Image, StyleSheet,View} from 'react-native'
 
-export default class index extends Component {
+export default class rocker extends Component {
   constructor(props){
     super(props)
     this.state = {
@@ -9,7 +9,8 @@ export default class index extends Component {
       rotateBoxPageX:0,
       rotateBoxPageY:0,
       rotateBoxWidth:0,
-      point:{x:0,y:0}
+      point:{x:0,y:0},
+      isMove:'none'
     }
     this.bagRef = React.createRef();
 
@@ -51,6 +52,7 @@ export default class index extends Component {
     
     onPanResponderMove: (e, gestureState) => {
      const {rotateBoxPageX,rotateBoxPageY,rotateBoxWidth} = this.state
+     this.setState({isMove:'flex'})
       // 转换坐标系得到以 （ox, oy） 为圆心的相对坐标
       let x = e.nativeEvent.pageX -(rotateBoxPageX +( rotateBoxWidth/2) )   
       let y =( (rotateBoxWidth/2)- e.nativeEvent.pageY  ) + rotateBoxPageY
@@ -62,60 +64,48 @@ export default class index extends Component {
       // 不同的坐标系中角度变化不同，需要做一下判断
         if (y <= 0) {
           if(x>=0){
-            
           a =  Math.PI-a
           }else{
           a =  -Math.PI-a
-
           }
         }
-      console.log(a * 180/Math.PI);
+     if(a>=(Math.PI/2)){
+        a = Math.PI/2
+      }
+      if(a<=(-(Math.PI/2))){
+        a = -Math.PI/2
+      }
       this.setState({deg:a})
      },
+     onPanResponderRelease:(e)=>{
+      this.setState({isMove:'none'})
+     }
   })
-
- 
-    
   render() {
-    const {deg}  = this.state
+  const {deg,isMove}  = this.state
     return (
-     <Animated.View>
-       <ImageBackground   ref={(ref)=>this.bagRef=ref} style={{ width:182,height:  182, position:'relative',padding:1,position:'relative' }} source={require('../img/middle_left.png')}>
-          {/* <View style={{...style.dotateWarp,transform:[{translateX:-10}, ]}}> */}
-          <View style={{...style.dotateWarp,transform:[{translateX:-10},{rotateZ:`${deg}deg}`}]}}>
-             <View  style={ style.dotateInner}>
-               <Animated.View
-                    style={{
-                      position:'absolute',zIndex:99,top:16}}
-                   {...this.panResponder.panHandlers}
-                 >
-                  <TouchableOpacity >
-                          <Image style={{width:16,height:24}} source={require('./img/control_horizontal_arm.png')}></Image>
-                  </TouchableOpacity>
-               </Animated.View>
-
-                <Image style={{ width:16,height:'55%'}} source={require('./img/rotate_arm.png')}></Image>
-             </View>
-          </View>
-        </ImageBackground>
-     </Animated.View>
-      )
+      <View  ref={(ref)=>this.bagRef=ref}  style={{width:'100%',height:'100%', position:"relative",alignItems:'center',justifyContent:'center'}}>  
+         <View style={{ transform:[ {rotateZ:`${deg}deg}`}]  }}>
+       {/* 第一个遥杆 */}
+           <View  style={{height:126,position:'relative'}}>
+             <Animated.View
+                   style={{
+                     position:'absolute',zIndex:99}}
+                 {...this.panResponder.panHandlers}
+               >
+                 <TouchableOpacity >
+                         <Image style={{width:16,height:24}} source={require('./img/control_horizontal_arm.png')}></Image>
+                 </TouchableOpacity>
+             </Animated.View>
+               <Image style={{ width:16,height:'55%'}} source={require('./img/rotate_arm.png')}></Image>
+           </View>
+           
+         </View>
+         <Image
+             style={{position:'absolute',  width:133,height:12,display:isMove   }}
+              source={require('./img/bg_activatie_arm.png')}></Image>
+        
+      </View>
+    )
   }
 }
-const style = StyleSheet.create({
-  dotateWarp:{
-    width:20,
-    height:'100%',
-    position:'absolute',
-    left:'50%',
-    
-  },
-  dotateInner:{
-    position:'absolute',
-    left:0,
-    top:0,
-    width:'100%',
-    height:'100%',
-    
-  }
-})
