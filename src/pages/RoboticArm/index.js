@@ -1,12 +1,8 @@
 import React, { Component } from 'react'
 import { View,Text, ImageBackground,Image ,StyleSheet} from 'react-native'
-import { pxToDp } from '../../utils/stylesKits'
 import Camera from "./camera/index"
-import IconsBtn from "./iconsBtn/index"
 import FooterIcons from './footerIcons/index'
-import babysealData from "../../../babyseal.json"
 import SteeringWheel from './SteeringWheel/index'
-import Rotate from "./rotate/index"
 import Doublerotate from "./doublerotate/index"
 export default class RoboticArm extends Component {
   
@@ -33,14 +29,15 @@ export default class RoboticArm extends Component {
         </ImageBackground>
         {/* middle */}
         <View style={styles.middleContainer}>
+        <SteeringWheel actionSteeringWheel={this.actionSteeringWheel}></SteeringWheel>
         <Doublerotate></Doublerotate>
-         
         </View>
         {/* footer */}
         <View style={styles.footerContainer}> 
         <Image style={{width:55,height:110,position:'absolute',left:0,bottom:0}} source={require('./img/footer_left.png')}></Image>
           <View style={styles.positonFotterWarp}>
             <Image style={{height:21}} source={require('./img/footer_left2.png')}></Image>
+            <FooterIcons openSteeringBtn={openSteeringBtn} changeopenSteeringBtn={this.changeopenSteeringBtn}></FooterIcons>
             <Image style={{height:21}} source={require('./img/footer_left2.png')}></Image>
           </View>
         <Image style={{width:55,height:110,position:'absolute',right:0,bottom:0,transform:[ {rotateY:'180deg'}]}} source={require('./img/footer_left.png')}></Image>
