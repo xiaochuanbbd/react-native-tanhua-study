@@ -1,8 +1,8 @@
 import React, { useState, useRef } from "react";
 import { useEffect } from "react";
 import { View, StyleSheet, PanResponder } from "react-native";
-import layoutRef from "./doublerotate/layoutRef";
-import RotateMove from "./RotateMove";
+import layoutRef from "./layoutRef";
+import RotateMove from "./RotateMove--demo";
 const Demo = () => {
   const [angle, setAngle] = useState(0);
   const [angle2, setAngle2] = useState(0);

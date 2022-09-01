@@ -3,7 +3,8 @@ import { View, Text, ImageBackground, Image, StyleSheet } from "react-native";
 import Camera from "./camera/index";
 import FooterIcons from "./footerIcons/index";
 import Rotate from "./rotate/index";
-import Doublerotate from "./doublerotate/index";
+import Doublerotate2 from "./doublerotate2/index";
+import Roboticarm_demo from "./doublerotate2/roboticarm_demo";
 export default class RoboticArm extends Component {
   state = {};
 
@@ -17,16 +18,14 @@ export default class RoboticArm extends Component {
   };
 
   render() {
-    const {
-      btnForbidden,
-      actIndex,
-      iconsBtn,
-      openCamera,
-      openSteeringBtn,
-      steeringWheelBtn,
-    } = this.state;
+    const { openCamera, openSteeringBtn } = this.state;
     return (
-      <View style={{ flex: 1, justifyContent: "space-between" }}>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "flex-start",
+        }}
+      >
         {/* hedder */}
         <ImageBackground
           style={{ width: "100%", height: 64, alignItems: "center" }}
@@ -41,7 +40,8 @@ export default class RoboticArm extends Component {
         {/* middle */}
         <View style={styles.middleContainer}>
           <Rotate actionSteeringWheel={this.actionSteeringWheel}></Rotate>
-          <Doublerotate></Doublerotate>
+          {/* <Roboticarm_demo></Roboticarm_demo> */}
+          <Doublerotate2></Doublerotate2>
         </View>
         {/* footer */}
         <View style={styles.footerContainer}>
@@ -88,11 +88,10 @@ export default class RoboticArm extends Component {
 const styles = StyleSheet.create({
   middleContainer: {
     flex: 1,
+    marginBottom: 50,
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
-    paddingLeft: 57,
-    paddingRight: 57,
+    justifyContent: "space-around",
   },
   footerContainer: {
     position: "relative",
