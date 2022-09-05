@@ -1,15 +1,15 @@
 import React, { useState, useRef } from "react";
 import { useEffect } from "react";
-import { View, StyleSheet, PanResponder } from "react-native";
+import { View, Image, StyleSheet, PanResponder } from "react-native";
 import layoutRef from "./layoutRef";
 const Demo = () => {
-  const [rootAngle, setRootAngle] = useState(0);
-  const [middleAngle, setMiddleAngle] = useState(0);
+  const [rootAngle, setRootAngle] = useState(355);
+  const [middleAngle, setMiddleAngle] = useState(10);
   const rotateBox = useRef(null);
+  const rotate2Box = useRef(null);
   const rotateLine = useRef(null);
   let rotateBoxXY = { pageX: 0, pageY: 0 };
   let rotateLineHeight = 0;
-  let isChildMove = false; //定义一个变量，阻止父级接管子级手势
   useEffect(() => {
     setTimeout(async () => {
       const rotateBoxRef = await layoutRef(rotateBox.current);
@@ -22,12 +22,15 @@ const Demo = () => {
   }, []);
   const panResponder = useRef(
     PanResponder.create({
-      onMoveShouldSetPanResponder: () => !isChildMove,
+      onMoveShouldSetPanResponder: () => true,
       onPanResponderGrant: () => {},
-      onPanResponderMove: (e) => {
+      onPanResponderMove: async (e) => {
         let pos = { x: e.nativeEvent.pageX, y: e.nativeEvent.pageY };
         let x = pos.x - rotateBoxXY.pageX; //对边
         let y = pos.y - rotateBoxXY.pageY; //邻边
+        const rotate2BoxRef = await layoutRef(rotate2Box.current);
+        console.log(rotate2BoxRef.pageY + 10, rotateBoxXY.pageY);
+        if (y > 0) return;
         let cos2 =
           (x * x +
             y * y -
@@ -41,6 +44,7 @@ const Demo = () => {
         }
         //Math.Sqrt函数返回一个数的平方根
         let sin2 = Math.sqrt(1 - cos2 * cos2); //正负两个方向
+
         let sita2 = Math.atan2(sin2, cos2);
         let sita1 =
           Math.atan2(y, x) -
@@ -50,25 +54,33 @@ const Demo = () => {
           );
 
         let t1 = (sita1 * 180) / Math.PI;
-        let t2 = (sita2 * 180) / Math.PI;
         let rootAngle = ClampAngle(t1) + 90;
-        let middleAngle = ClampAngle(t2);
-        //限制条件 看公司的需求
+        //限制条件
         if (pos.x > rotateBoxXY.pageX && rootAngle >= 85) {
           rootAngle = 85;
         }
         if (rootAngle < 0) {
           rootAngle = 360 + rootAngle;
         }
-        if (pos.x < rotateBoxXY.pageX && rootAngle <= 275) {
-          rootAngle = 275;
+
+        let t2 = (sita2 * 180) / Math.PI;
+        let middleAngle = ClampAngle(t2);
+
+        if (middleAngle < 0) {
+          middleAngle = 360 + middleAngle;
+        }
+
+        if (middleAngle <= 15) {
+          middleAngle = 15;
         }
         if (middleAngle >= 165) {
           middleAngle = 165;
         }
-        console.log(middleAngle, "middleAngle");
-        setRootAngle(rootAngle);
+
+        // console.log(middleAngle, "middleAngle");
+        // console.log(rootAngle, "rootAngle");
         setMiddleAngle(middleAngle);
+        setRootAngle(rootAngle);
       },
 
       onPanResponderRelease: () => {},
@@ -83,45 +95,36 @@ const Demo = () => {
     return _angle;
   };
   return (
-    <View
-      style={{
-        flex: 1,
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-around",
-      }}
-    >
-      <View style={style.container}>
-        <View
-          style={[
-            style.rotateBox,
-            {
-              backgroundColor: "pink",
-              transform: [{ rotate: `${rootAngle}deg` }],
-            },
-          ]}
-          ref={rotateBox}
-        >
-          <View style={[style.rotateLine]} ref={rotateLine}>
-            <View
-              style={[
-                style.rotateBox,
-                {
-                  top: -15,
-                  backgroundColor: "yellow",
-                  transform: [{ rotate: `${middleAngle}deg` }],
-                },
-              ]}
-            >
-              <View style={[style.rotateLine]}>
-                <View
-                  style={[
-                    style.rotateBox,
-                    { top: -15, backgroundColor: "green" },
-                  ]}
-                  {...panResponder.panHandlers}
-                ></View>
-              </View>
+    <View style={style.container}>
+      <View
+        style={[
+          style.rotateBox,
+          {
+            transform: [{ rotate: `${rootAngle}deg` }],
+          },
+        ]}
+        ref={rotateBox}
+      >
+        <View style={[style.rotateLine]} ref={rotateLine}>
+          <View style={[style.rotatePoint]}></View>
+          <View
+            ref={rotate2Box}
+            style={[
+              style.rotateBox,
+
+              {
+                top: -10,
+                transform: [{ rotate: `${middleAngle}deg` }],
+              },
+            ]}
+          >
+            <View style={[style.rotateLine]}>
+              <View style={[style.rotatePoint]}></View>
+              <Image
+                source={require("./img/control_horizontal_arm.png")}
+                style={[{ top: -14, width: 18, height: 28 }]}
+                {...panResponder.panHandlers}
+              ></Image>
             </View>
           </View>
         </View>
@@ -130,33 +133,38 @@ const Demo = () => {
   );
 };
 const style = StyleSheet.create({
-  container: {
-    width: 180,
-    height: 180,
-    borderColor: "#000",
-    borderWidth: 2,
-    borderRadius: 10,
-    alignItems: "center",
-    justifyContent: "center",
-  },
   rotateBox: {
-    width: 30,
-    height: 30,
-    borderRadius: 8,
+    width: 18,
+    height: 18,
+    borderRadius: "50%",
     display: "flex",
     justifyContent: "flex-start",
     alignItems: "center",
+    borderColor: "rgba(179, 209, 255,1)",
+    borderWidth: 3,
+    backgroundColor: "rgba(275, 275, 275, 1)",
   },
   rotateLine: {
-    bottom: 65,
-    width: 1,
-    height: 80,
+    bottom: 40,
+    width: 10,
+    height: 50,
+    borderWidth: 2,
+    backgroundColor: "#fff",
+    borderRadius: 8,
+    borderColor: "rgba(179, 209, 255, 1)",
     position: "relative",
     zIndex: 99,
-    backgroundColor: "#000",
     display: "flex",
     alignItems: "center",
     justifyContent: "flex-start",
+  },
+  rotatePoint: {
+    width: 4,
+    height: 4,
+    borderRadius: "50%",
+    backgroundColor: "rgba(179, 209, 255, 1)",
+    position: "absolute",
+    bottom: 2,
   },
 });
 export default Demo;

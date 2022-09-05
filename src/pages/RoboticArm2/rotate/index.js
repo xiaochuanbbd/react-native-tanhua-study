@@ -63,6 +63,7 @@ export default class index extends Component {
       let r = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
       // 根据三角函数 sinA 对边/斜边 x/r， 反推出a的值，得到旋转的弧度
       let a = Math.asin(x / r);
+
       // 不同的坐标系中角度变化不同，需要做一下判断
       if (y <= 0) {
         if (x >= 0) {
@@ -71,13 +72,7 @@ export default class index extends Component {
           a = -Math.PI - a;
         }
       }
-
       this.setState({ deg: a });
-      a = (a * 180) / Math.PI;
-      if (a < 0) {
-        a = 360 + a;
-      }
-      this.props.actionChange(a, 1);
     },
   });
 
@@ -99,7 +94,7 @@ export default class index extends Component {
           <View
             style={{
               ...style.dotateWarp,
-              transform: [{ rotate: `${deg}deg}` }],
+              transform: [{ rotateZ: `${deg}deg}` }],
             }}
           >
             <View style={style.dotateInner}>

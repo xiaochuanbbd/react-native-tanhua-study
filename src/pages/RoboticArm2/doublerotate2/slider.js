@@ -114,6 +114,16 @@ class Slider extends Component {
           style={{ width: 40, height: 40 }}
           source={require("./img/icon_horizontal_arm.png")}
         ></Image>
+        <Image
+          style={{
+            width: 40,
+            height: 40,
+            position: "absolute",
+            top: -40,
+            right: 0,
+          }}
+          source={require("./img/icon_horizontal_arm.png")}
+        ></Image>
       </View>
     );
   }

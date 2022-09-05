@@ -1,0 +1,402 @@
+{
+  "NAME": "twoboneArm",
+  "STRUCTURE": [
+    {
+      "oldParallel": false,
+      "circularInfo": [],
+      "pInterface": 0,
+      "matchType": 0,
+      "matchIndex": 0,
+      "oldType": 0,
+      "angle": 0,
+      "type": 0,
+      "mInterface": 0,
+      "parallel": false,
+      "mDepth": 0,
+      "pIndex": 0,
+      "mIndex": 0
+    },
+    {
+      "oldParallel": false,
+      "circularInfo": [],
+      "pInterface": 1,
+      "matchType": 0,
+      "matchIndex": 0,
+      "oldType": 0,
+      "angle": 263.935546875,
+      "type": 1,
+      "mInterface": 0,
+      "parallel": true,
+      "mDepth": 1,
+      "pIndex": 0,
+      "mIndex": 1
+    },
+    {
+      "oldParallel": false,
+      "circularInfo": [],
+      "pInterface": 3,
+      "matchType": 0,
+      "matchIndex": 0,
+      "oldType": 0,
+      "angle": 158.5546875,
+      "type": 1,
+      "mInterface": 1,
+      "parallel": true,
+      "mDepth": 2,
+      "pIndex": 1,
+      "mIndex": 2
+    },
+    {
+      "oldParallel": false,
+      "circularInfo": [],
+      "pInterface": 0,
+      "matchType": 0,
+      "matchIndex": 0,
+      "oldType": 0,
+      "angle": 105,
+      "type": 1,
+      "mInterface": 0,
+      "parallel": false,
+      "mDepth": 3,
+      "pIndex": 2,
+      "mIndex": 3
+    },
+    {
+      "oldParallel": false,
+      "circularInfo": [],
+      "pInterface": 3,
+      "matchType": 0,
+      "matchIndex": 0,
+      "oldType": 0,
+      "angle": 0,
+      "type": 2,
+      "mInterface": 0,
+      "parallel": true,
+      "mDepth": 4,
+      "pIndex": 3,
+      "mIndex": 4
+    },
+    {
+      "oldParallel": false,
+      "circularInfo": [],
+      "pInterface": 1,
+      "matchType": 0,
+      "matchIndex": 0,
+      "oldType": 0,
+      "angle": 207.685546875,
+      "type": 1,
+      "mInterface": 1,
+      "parallel": true,
+      "mDepth": 5,
+      "pIndex": 4,
+      "mIndex": 5
+    },
+    {
+      "oldParallel": false,
+      "circularInfo": [],
+      "pInterface": 3,
+      "matchType": 0,
+      "matchIndex": 0,
+      "oldType": 0,
+      "angle": 0,
+      "type": 2,
+      "mInterface": 1,
+      "parallel": true,
+      "mDepth": 6,
+      "pIndex": 5,
+      "mIndex": 6
+    },
+    {
+      "oldParallel": false,
+      "circularInfo": [],
+      "pInterface": 0,
+      "matchType": 0,
+      "matchIndex": 0,
+      "oldType": 0,
+      "angle": 94.658203125,
+      "type": 1,
+      "mInterface": 3,
+      "parallel": true,
+      "mDepth": 7,
+      "pIndex": 6,
+      "mIndex": 7
+    },
+    {
+      "oldParallel": false,
+      "circularInfo": [],
+      "pInterface": 0,
+      "matchType": 0,
+      "matchIndex": 0,
+      "oldType": 0,
+      "angle": 70.400390625,
+      "type": 1,
+      "mInterface": 3,
+      "parallel": false,
+      "mDepth": 8,
+      "pIndex": 7,
+      "mIndex": 8
+    },
+    {
+      "oldParallel": false,
+      "circularInfo": [],
+      "pInterface": 0,
+      "matchType": 0,
+      "matchIndex": 0,
+      "oldType": 0,
+      "angle": 0,
+      "type": 6,
+      "mInterface": 0,
+      "parallel": true,
+      "mDepth": 9,
+      "pIndex": 8,
+      "mIndex": 9
+    }
+  ],
+  "ACTIONS": [
+    {
+      "actName": "初始位置",
+      "STEP": [
+        {
+          "delayTime": 0,
+          "segmentIndex": 0,
+          "POSTURE": [
+            {
+              "rotate": false,
+              "speed": 100,
+              "angle": 260,
+              "type": 1,
+              "forward": false,
+              "moduleId": 1
+            },
+            {
+              "rotate": false,
+              "speed": 100,
+              "angle": 158,
+              "type": 1,
+              "forward": false,
+              "moduleId": 2
+            },
+            {
+              "rotate": false,
+              "speed": 100,
+              "angle": 120,
+              "type": 1,
+              "forward": false,
+              "moduleId": 3
+            },
+            {
+              "rotate": false,
+              "speed": 100,
+              "angle": 204,
+              "type": 1,
+              "forward": false,
+              "moduleId": 5
+            },
+            {
+              "rotate": false,
+              "speed": 100,
+              "angle": 97,
+              "type": 1,
+              "forward": false,
+              "moduleId": 7
+            },
+            {
+              "rotate": false,
+              "speed": 100,
+              "angle": 70,
+              "type": 1,
+              "forward": false,
+              "moduleId": 8
+            }
+          ],
+          "steeringIndex": 0,
+          "executeTime": 0,
+          "stepIndex": 0
+        }
+      ],
+      "actType": 0,
+      "actIcon": "",
+      "actIndex": 0
+    },
+    {
+      "actName": "连杆两个姿态",
+      "STEP": [
+        {
+          "delayTime": 0,
+          "segmentIndex": 0,
+          "POSTURE": [
+            {
+              "rotate": false,
+              "speed": 100,
+              "angle": 105,
+              "type": 1,
+              "forward": false,
+              "moduleId": 3
+            }
+          ],
+          "steeringIndex": 0,
+          "executeTime": 0,
+          "stepIndex": 0
+        },
+        {
+          "delayTime": 0,
+          "segmentIndex": 0,
+          "POSTURE": [
+            {
+              "rotate": false,
+              "speed": 100,
+              "angle": 207,
+              "type": 1,
+              "forward": false,
+              "moduleId": 5
+            }
+          ],
+          "steeringIndex": 0,
+          "executeTime": 0,
+          "stepIndex": 0
+        }
+      ],
+      "actType": 4,
+      "actIcon": "",
+      "actIndex": 2
+    },
+    {
+      "actName": "夹子最默认",
+      "STEP": [
+        {
+          "delayTime": 0,
+          "segmentIndex": 0,
+          "POSTURE": [
+            {
+              "rotate": false,
+              "speed": 100,
+              "angle": 70,
+              "type": 1,
+              "forward": false,
+              "moduleId": 8
+            }
+          ],
+          "steeringIndex": 0,
+          "executeTime": 0,
+          "stepIndex": 0
+        }
+      ],
+      "actType": 4,
+      "actIcon": "",
+      "actIndex": 1
+    },
+    {
+      "actName": "底座左中右",
+      "STEP": [
+        {
+          "delayTime": 0,
+          "segmentIndex": 0,
+          "POSTURE": [
+            {
+              "rotate": false,
+              "speed": 100,
+              "angle": 78,
+              "type": 1,
+              "forward": false,
+              "moduleId": 2
+            }
+          ],
+          "steeringIndex": 0,
+          "executeTime": 0,
+          "stepIndex": 0
+        },
+        {
+          "delayTime": 0,
+          "segmentIndex": 0,
+          "POSTURE": [
+            {
+              "rotate": false,
+              "speed": 100,
+              "angle": 158,
+              "type": 1,
+              "forward": false,
+              "moduleId": 2
+            }
+          ],
+          "steeringIndex": 0,
+          "executeTime": 0,
+          "stepIndex": 0
+        },
+        {
+          "delayTime": 0,
+          "segmentIndex": 0,
+          "POSTURE": [
+            {
+              "rotate": false,
+              "speed": 100,
+              "angle": 238,
+              "type": 1,
+              "forward": false,
+              "moduleId": 2
+            }
+          ],
+          "steeringIndex": 0,
+          "executeTime": 0,
+          "stepIndex": 0
+        }
+      ],
+      "actType": 4,
+      "actIcon": "",
+      "actIndex": 3
+    }
+  ],
+  "OFFICIALBUTTONS": [
+    {
+      "btnName": "构型归位",
+      "btnIndex": 0,
+      "btnType": 0,
+      "btnTime": 0,
+      "actArr": [
+        {
+          "actIndex": 0,
+          "startDelayTime": 0,
+          "repeatTimes": 1
+        }
+      ]
+    },
+    {
+      "btnName": "左360滑条",
+      "btnIndex": 1,
+      "btnType": 3,
+      "btnTime": 0,
+      "actArr": [
+        {
+          "actIndex": 1,
+          "startDelayTime": 0,
+          "repeatTimes": 1
+        }
+      ]
+    },
+    {
+      "btnName": "右1滑条",
+      "btnIndex": 2,
+      "btnType": 3,
+      "btnTime": 0,
+      "actArr": [
+        {
+          "actIndex": 2,
+          "startDelayTime": 0,
+          "repeatTimes": 1
+        }
+      ]
+    },
+    {
+      "btnName": "底部底座滑条",
+      "btnIndex": 3,
+      "btnType": 3,
+      "btnTime": 0,
+      "actArr": [
+        {
+          "actIndex": 3,
+          "startDelayTime": 0,
+          "repeatTimes": 1
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,129 @@
+{
+  "NAME": "arm",
+  "STRUCTURE": [
+    {
+      "mDepth": 0,
+      "pIndex": 0,
+      "angle": 0,
+      "parallel": false,
+      "mIndex": 0,
+      "pInterface": 0,
+      "mInterface": 0,
+      "type": 0,
+      "circularInfo": []
+    },
+    {
+      "mDepth": 1,
+      "pIndex": 0,
+      "angle": 250.48828125,
+      "parallel": true,
+      "mIndex": 1,
+      "pInterface": 1,
+      "mInterface": 3,
+      "type": 1,
+      "circularInfo": []
+    },
+    {
+      "mDepth": 2,
+      "pIndex": 1,
+      "angle": 236.953125,
+      "parallel": true,
+      "mIndex": 2,
+      "pInterface": 1,
+      "mInterface": 1,
+      "type": 1,
+      "circularInfo": []
+    },
+    {
+      "mDepth": 3,
+      "pIndex": 2,
+      "angle": 195.908203125,
+      "parallel": false,
+      "mIndex": 3,
+      "pInterface": 0,
+      "mInterface": 0,
+      "type": 1,
+      "circularInfo": []
+    },
+    {
+      "mDepth": 4,
+      "pIndex": 3,
+      "angle": 0,
+      "parallel": true,
+      "mIndex": 4,
+      "pInterface": 3,
+      "mInterface": 0,
+      "type": 2,
+      "circularInfo": []
+    },
+    {
+      "mDepth": 5,
+      "pIndex": 4,
+      "angle": 9.84375,
+      "parallel": true,
+      "mIndex": 5,
+      "pInterface": 1,
+      "mInterface": 2,
+      "type": 1,
+      "circularInfo": []
+    },
+    {
+      "mDepth": 6,
+      "pIndex": 5,
+      "angle": 87.1875,
+      "parallel": false,
+      "mIndex": 6,
+      "pInterface": 0,
+      "mInterface": 3,
+      "type": 1,
+      "circularInfo": []
+    },
+    {
+      "mDepth": 7,
+      "pIndex": 6,
+      "angle": 0,
+      "parallel": true,
+      "mIndex": 7,
+      "pInterface": 0,
+      "mInterface": 0,
+      "type": 6,
+      "circularInfo": []
+    }
+  ],
+  "CurrentPage": 0,
+  "ACTIONS": [
+    {
+      "actName": "初始位置",
+      "STEP": [],
+      "actType": 0,
+      "actIcon": "",
+      "actIndex": 0
+    },
+    {
+      "actName": "第一个杆左中右",
+      "STEP": [
+        {},
+        {}
+      ],
+      "actType": 4,
+      "actIcon": "",
+      "actIndex": 2
+    },
+    {
+      "actName": "第二个杆左中右",
+      "STEP": [],
+      "actType": 4,
+      "actIcon": "",
+      "actIndex": 3
+    },
+    {},
+    {}
+  ],
+  "OFFICIALBUTTONS": [
+    {},
+    {},
+    {},
+    {},
+    {}
+  ]
+}

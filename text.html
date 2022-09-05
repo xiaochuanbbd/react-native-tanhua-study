@@ -1,91 +1,321 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-  <script src="https://cdn.shopify.com/s/files/1/0260/2935/9194/t/10/assets/jquery-3.5.1.min.js"></script>
-  <style>
-  .direct {
-	width: 200px;
-	height: 200px;
-	background-color: gray;
-	text-align: center;
-	position: relative;
-}
-.line {
-	width: 10px;
-	position: absolute;
-	top: 45%;
-	left: 45%;
-	display: inline-block;
-	transform: rotate(45deg);
-}
-
-      </style>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
 </head>
+<style>
+	body {
+		padding: 10;
+	}
+</style>
+
 <body>
-  <div class="direct">
-    <canvas id="range"></canvas>
-    <hr class="line">
-  </div>
-  
+	<!-- 刻度尺容器(必要的) -->
+	<div class="ruler-wrap" id="ruler"></div>
+
+	<!-- 刻度尺容器(必要的) -->
+	<div class="ruler-wrap" style="width: 90%;" id="ruler2"></div>
+
+
+	<input id="rulerText3" class="text-input" type="text" readonly value="">
+
+	<!-- 刻度尺容器(必要的) -->
+	<div class="ruler-wrap" style="width: 80%;" id="ruler3"></div>
+
+
+	<!-- 引入刻度尺插件js -->
+	<script>
+		var ruler = {
+			/**
+			 * 初始化刻度尺插件
+			 * @el 容器 String
+			 * @height 刻度尺高度 Number
+			 * @maxScale 最大刻度 Number
+			 * @startValue 开始的值 Number
+			 * @region 区间 Array
+			 * @background 刻度尺背景颜色 String
+			 * @color 刻度线和字体的颜色 String
+			 * @markColor  中心刻度标记颜色 String
+			 * @isConstant 是否不断地获取值 Boolean
+			 * @success(res) 滑动结束后的回调 Function
+			 * */
+			initPlugin: function (params) {
+				var initParams = {
+					el: params.el,
+					height: params.height || 60,
+					maxScale: params.maxScale || 200,
+					startValue: params.startValue || 0,
+					region: params.region || false,
+					background: params.background || false,
+					color: params.color || false,
+					markColor: params.markColor || "#FFCC33",
+					isConstant: params.isConstant || false
+				};
+
+				if (!initParams.el) {
+					console.warn("没有容器元素的参数");
+					return false;
+				}
+
+				var rulerWrap = document.getElementById(initParams.el); //获取容器
+				rulerWrap.style.height = initParams.height < 50 ? 50 + "px" : initParams.height + "px";
+
+				//最大刻度的小值是50
+				initParams.maxScale = initParams.maxScale < 50 ? 50 : initParams.maxScale;
+
+				if (initParams.startValue > initParams.maxScale) {
+					initParams.startValue = initParams.maxScale;
+				}
+
+				var minSildeNum = 0; //最小滑动的值
+				var maxSildeNum = initParams.maxScale; //最大滑动的值
+
+				if (initParams.region) {
+					minSildeNum = Math.floor(initParams.region[0]);
+					maxSildeNum = Math.floor(initParams.region[1]);
+				}
+
+				var count = initParams.startValue; //初始值
+
+				var winWidth = rulerWrap.offsetWidth; //容器宽度
+				var division = winWidth / 100; //每个刻度的距离 分割线
+				//刻度值数组
+				var scaleValueList = [];
+				for (var i = 0; i <= initParams.maxScale; i += 10) {
+					scaleValueList.push(`${i/10}s`);
+				}
+
+				var canvas = rulerWrap.getElementsByTagName("canvas")[0]; //获取容器下的canvas标签
+				//没有canvas就创建一个
+				if (!canvas) {
+					canvas = document.createElement("canvas"); //创建canvas标签
+					canvas.width = winWidth;
+					canvas.height = initParams.height;
+					rulerWrap.appendChild(canvas);
+				}
+				var cxt = canvas.getContext("2d");
+
+				if (window.devicePixelRatio) {
+					canvas.width = window.devicePixelRatio * winWidth;
+					canvas.height = window.devicePixelRatio * initParams.height;
+					cxt.scale(window.devicePixelRatio, window.devicePixelRatio);
+				}
+
+				//画刻度尺
+				function drawRuler(count) {
+					count = count - 25;
+
+					//清空画布
+					cxt.clearRect(0, 0, winWidth, initParams.height);
+
+					//刻度尺背景
+					if (initParams.background) {
+						cxt.fillStyle = initParams.background;
+						cxt.fillRect(0, 0, canvas.width, initParams.height);
+					}
+
+					//画刻度线
+					for (var i = 0; i < initParams.maxScale; i++) {
+						cxt.beginPath();
+						cxt.save();
+						cxt.strokeStyle = initParams.color ? initParams.color : "#bbb";
+						cxt.lineWidth = 1;
+						cxt.lineCap = "round";
+						cxt.moveTo(division * i - count * division, 0);
+						cxt.lineTo(division * i - count * division, Math.floor(initParams.height * 0.3));
+
+						if (i % 2 === 0) {
+							cxt.strokeStyle = initParams.color ? initParams.color : "#999";
+							cxt.lineTo(division * i - count * division, Math.floor(initParams.height * 0.35));
+						}
+						if (i % 10 === 0) {
+							cxt.strokeStyle = initParams.color ? initParams.color : "#666";
+							cxt.lineTo(division * i - count * division, Math.floor(initParams.height * 0.52));
+						}
+
+						cxt.stroke();
+						cxt.restore();
+						cxt.closePath();
+					}
+
+					//添加体重数字
+					cxt.beginPath();
+					cxt.font = "14px Arial";
+					cxt.fillStyle = initParams.color ? initParams.color : "#333";
+					cxt.textAlign = "left";
+					cxt.textBaseline = "bottom";
+					scaleValueList.forEach(function (num, i) {
+						cxt.fillText(num.toString(), (division * i * 10) - (count * division), Math.floor(initParams.height *
+							0.75));
+					});
+					cxt.closePath();
+
+					//中心刻度线
+					cxt.beginPath();
+					cxt.save();
+					cxt.strokeStyle = initParams.markColor;
+					cxt.lineWidth = 2;
+					cxt.lineCap = "round";
+					cxt.moveTo((winWidth / 2), 0);
+					cxt.lineTo((winWidth / 2), Math.floor(initParams.height * 0.52));
+					cxt.stroke();
+					cxt.restore();
+					cxt.closePath();
+
+				}
+
+				if (window.devicePixelRatio) {
+					canvas.style.transform = "scale(" + 1 / window.devicePixelRatio + ")";
+					canvas.style.transformOrigin = "left top";
+				}
+
+				drawRuler(count);
+
+				//滑动相关
+				var initX = 0, //初始x 距离
+					endX = 0, //结束x 距离
+					distanceX = 0, //移动距离
+					_distanceX = 0, // 判断用的移动距离
+					lastX = count; //上次移动距离
+
+				if (!canvas) return false;
+
+				//手指按下
+				canvas.addEventListener("touchstart", function (e) {
+					initX = e.targetTouches[0].pageX;
+
+				}, false);
+
+				//手指滑动
+				canvas.addEventListener("touchmove", function (e) {
+					endX = e.targetTouches[0].pageX;
+					moveEvent();
+				}, false);
+
+				//手指抬起
+				canvas.addEventListener("touchend", function (e) {
+					lastX = count;
+					overEvent();
+				}, false);
+
+				var isMouseDown = false; //鼠标是否按下
+
+				//鼠标按下
+				canvas.addEventListener("mousedown", function (e) {
+					isMouseDown = true;
+					initX = e.layerX;
+				}, false);
+
+				//鼠标移动
+				canvas.addEventListener("mousemove", function (e) {
+					if (!isMouseDown) {
+						return false;
+					}
+					endX = e.layerX;
+					moveEvent();
+				}, false);
+
+
+				//鼠标抬起&离开
+				canvas.addEventListener("mouseup", function (e) {
+					lastX = count;
+					isMouseDown = false;
+					overEvent();
+				}, false);
+
+				canvas.addEventListener("mouseleave", function (e) {
+					if (isMouseDown) {
+						lastX = count;
+						isMouseDown = false;
+						overEvent();
+					}
+				}, false);
+
+
+				//手指&鼠标移动事件
+				function moveEvent() {
+					distanceX = Math.floor((endX - initX) / (winWidth / 50));
+					if (distanceX === _distanceX) {
+						return false;
+					}
+					_distanceX = distanceX;
+					count = lastX + distanceX;
+
+					if (count >= initParams.maxScale || count <= 0) {
+						count = count >= initParams.maxScale ? initParams.maxScale : 0;
+					}
+					drawRuler(count);
+
+					if (initParams.isConstant) {
+						params.success && params.success(count);
+					}
+				}
+
+				//手指&鼠标结束事件
+				function overEvent() {
+					if (count > maxSildeNum) {
+						lastX = count = count > maxSildeNum ? maxSildeNum : count;
+					} else if (count < minSildeNum) {
+						lastX = count = count < minSildeNum ? minSildeNum : count;
+					} else {
+
+					}
+					drawRuler(count);
+
+					//返回最后的值
+					params.success && params.success(count);
+				}
+
+			}
+		};
+
+		//调用刻度尺方法
+		ruler.initPlugin({
+			el: "ruler", //容器id
+			startValue: 20,
+			maxScale: 600,
+			height: 20,
+			background: "#f5f5f5",
+			success: function (res) {
+				console.log(res);
+			}
+		});
+
+		// //调用刻度尺方法
+		// ruler.initPlugin({
+		// 	el: "ruler2", //容器id
+		// 	maxScale: 300, //最大刻度
+		// 	startValue: 50, //刻度开始的初始值
+		// 	region: [10, 200], //选择刻度的区间范围
+		// 	background: "#2bd4bc", //刻度尺背景色
+		// 	markColor: "#c968ff", //中心刻度标记颜色
+		// 	success: function (res) {
+		// 		console.log(res);
+		// 	}
+		// });
+		// var rulerText3 = document.getElementById("rulerText3");
+		// rulerText3.value = 200;
+		// //调用刻度尺方法
+		// ruler.initPlugin({
+		// 	el: "ruler3", //容器id
+		// 	height: 50, //刻度尺高度
+		// 	maxScale: 300, //最大刻度
+		// 	startValue: 200, //刻度开始的初始值
+		// 	region: [50, 220], //选择刻度的区间范围
+		// 	background: "#ffa43c", //刻度尺背景色
+		// 	color: "#fff", //刻度线和字体的颜色
+		// 	markColor: "#3786db", //中心刻度标记颜色
+		// 	isConstant: true, //是否不断地获取值
+		// 	success: function (res) {
+		// 		console.log(res);
+		// 		rulerText3.value = res;
+		// 	}
+		// });
+	</script>
 </body>
-<script>
-  // 获取到页面元素
-let div = document.querySelector('div.direct')
-let line = document.querySelector('hr.line')
-// 定位中心点的位置
-const ox = div.offsetWidth / 2, oy = div.offsetHeight / 2
-console.log('====================================');
-console.log(div.offsetWidth);
-console.log('====================================');
-// 绘制图形的函数
-let draw = function (a) {
-	if (a > 45 && a <= 120) {
-		return
-	}
-	let canvas = document.querySelector('#range')
-	let ctx = canvas.getContext("2d")
-	ctx.clearRect(0, 0, 200, 200)
-	ctx.beginPath()
-	// 画背景
-	ctx.arc(100,100, 50, 125 * Math.PI / 180,405 * Math.PI / 180)
-	ctx.strokeStyle = "#fff";
-	ctx.fillStyle = "gray";
-	ctx.lineWidth = 10
-	ctx.lineCap = "round"
-	ctx.stroke()
-	// 画进度条
-	ctx.beginPath()
-	ctx.arc(100,100, 50, 120 * Math.PI / 180 , a * Math.PI / 180)
-	ctx.lineWidth = 10
-	ctx.strokeStyle = "blue";
-	ctx.lineCap = "round"
-	ctx.stroke()
-}
-draw(125)
-// 监听鼠标移动时，计算出相对x轴的夹角，从而得到进度
-div.onmousemove = function (e) {
-	// 转换坐标系得到以 （ox, oy） 为圆心的相对坐标
-	let x = e.offsetX - ox
-	let y = oy - e.offsetY
-	// 根据两点间距离公式计算出鼠标点到圆心的距离
-	let r = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2))
-	// 根据三角函数 cos a = x / r， 反推出a的值，得到旋转的角度
-	let a = Math.acos((x / r)) * 180 / Math.PI
-	// 不同的坐标系中角度变化不同，需要做一下判断
-	if (y >= 0) {
-    a=-a
-		line.style.transform = `rotate(${a}deg)`
-		// draw(-a)
-	} else {
-		line.style.transform = `rotate(${a}deg)`
-		// draw(a)
-	}
-  console.log(a);
 
-	
-}
-
-     </script>
 </html>

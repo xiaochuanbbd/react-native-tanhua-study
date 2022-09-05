@@ -1,14 +1,15 @@
 import React, { useState, useRef } from "react";
 import { useEffect } from "react";
-import { View, Image, StyleSheet, PanResponder } from "react-native";
-import layoutRef from "../doublerotate/layoutRef";
+import { View, StyleSheet, PanResponder } from "react-native";
+import layoutRef from "./layoutRef";
 const Demo = () => {
-  const [rootAngle, setRootAngle] = useState(355);
-  const [middleAngle, setMiddleAngle] = useState(10);
+  const [rootAngle, setRootAngle] = useState(0);
+  const [middleAngle, setMiddleAngle] = useState(0);
   const rotateBox = useRef(null);
   const rotateLine = useRef(null);
   let rotateBoxXY = { pageX: 0, pageY: 0 };
   let rotateLineHeight = 0;
+  let isChildMove = false; //定义一个变量，阻止父级接管子级手势
   useEffect(() => {
     setTimeout(async () => {
       const rotateBoxRef = await layoutRef(rotateBox.current);
@@ -21,13 +22,12 @@ const Demo = () => {
   }, []);
   const panResponder = useRef(
     PanResponder.create({
-      onMoveShouldSetPanResponder: () => true,
+      onMoveShouldSetPanResponder: () => !isChildMove,
       onPanResponderGrant: () => {},
       onPanResponderMove: (e) => {
         let pos = { x: e.nativeEvent.pageX, y: e.nativeEvent.pageY };
         let x = pos.x - rotateBoxXY.pageX; //对边
         let y = pos.y - rotateBoxXY.pageY; //邻边
-        if (y > 0) return;
         let cos2 =
           (x * x +
             y * y -
@@ -53,28 +53,22 @@ const Demo = () => {
         let t2 = (sita2 * 180) / Math.PI;
         let rootAngle = ClampAngle(t1) + 90;
         let middleAngle = ClampAngle(t2);
-        //限制条件
+        //限制条件 看公司的需求
         if (pos.x > rotateBoxXY.pageX && rootAngle >= 85) {
           rootAngle = 85;
         }
         if (rootAngle < 0) {
           rootAngle = 360 + rootAngle;
         }
-        if (middleAngle < 0) {
-          middleAngle = 360 + middleAngle;
-        }
-        // if (pos.x < rotateBoxXY.pageX && rootAngle <= 275) {
-        //   // console.log("左上");
-        //   middleAngle = 15;
-        // }
-        if (middleAngle <= 15) {
-          middleAngle = 15;
+        if (pos.x < rotateBoxXY.pageX && rootAngle <= 275) {
+          rootAngle = 275;
         }
         if (middleAngle >= 165) {
           middleAngle = 165;
         }
-
-        console.log(middleAngle, "middleAngle");
+        console.log("====================================");
+        console.log(rootAngle, middleAngle);
+        console.log("====================================");
         setRootAngle(rootAngle);
         setMiddleAngle(middleAngle);
       },
@@ -91,33 +85,45 @@ const Demo = () => {
     return _angle;
   };
   return (
-    <View style={style.container}>
-      <View
-        style={[
-          style.rotateBox,
-          {
-            transform: [{ rotate: `${rootAngle}deg` }],
-          },
-        ]}
-        ref={rotateBox}
-      >
-        <View style={[style.rotateLine]} ref={rotateLine}>
-          <View style={[style.rotatePoint]}></View>
-          <View
-            style={[
-              style.rotateBox,
-              {
-                top: -10,
-                transform: [{ rotate: `${middleAngle}deg` }],
-              },
-            ]}
-          >
-            <View style={[style.rotateLine]}>
-              <Image
-                source={require("./img/control_horizontal_arm.png")}
-                style={[{ top: -14, width: 18, height: 28, opacity: 0.2 }]}
-                {...panResponder.panHandlers}
-              ></Image>
+    <View
+      style={{
+        flex: 1,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-around",
+      }}
+    >
+      <View style={style.container}>
+        <View
+          style={[
+            style.rotateBox,
+            {
+              backgroundColor: "pink",
+              transform: [{ rotate: `${rootAngle}deg` }],
+            },
+          ]}
+          ref={rotateBox}
+        >
+          <View style={[style.rotateLine]} ref={rotateLine}>
+            <View
+              style={[
+                style.rotateBox,
+                {
+                  top: -15,
+                  backgroundColor: "yellow",
+                  transform: [{ rotate: `${middleAngle}deg` }],
+                },
+              ]}
+            >
+              <View style={[style.rotateLine]}>
+                <View
+                  style={[
+                    style.rotateBox,
+                    { top: -15, backgroundColor: "green" },
+                  ]}
+                  {...panResponder.panHandlers}
+                ></View>
+              </View>
             </View>
           </View>
         </View>
@@ -126,38 +132,33 @@ const Demo = () => {
   );
 };
 const style = StyleSheet.create({
+  container: {
+    width: 180,
+    height: 180,
+    borderColor: "#000",
+    borderWidth: 2,
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+  },
   rotateBox: {
-    width: 18,
-    height: 18,
-    borderRadius: "50%",
+    width: 30,
+    height: 30,
+    borderRadius: 8,
     display: "flex",
     justifyContent: "flex-start",
     alignItems: "center",
-    borderColor: "rgba(179, 209, 255,1)",
-    borderWidth: 3,
-    backgroundColor: "rgba(275, 275, 275, 1)",
   },
   rotateLine: {
-    bottom: 40,
-    width: 10,
-    height: 50,
-    borderWidth: 2,
-    backgroundColor: "#fff",
-    borderRadius: 8,
-    borderColor: "rgba(179, 209, 255, 1)",
+    bottom: 65,
+    width: 1,
+    height: 80,
     position: "relative",
     zIndex: 99,
+    backgroundColor: "#000",
     display: "flex",
     alignItems: "center",
     justifyContent: "flex-start",
-  },
-  rotatePoint: {
-    width: 4,
-    height: 4,
-    borderRadius: "50%",
-    backgroundColor: "rgba(179, 209, 255, 1)",
-    position: "absolute",
-    bottom: 2,
   },
 });
 export default Demo;

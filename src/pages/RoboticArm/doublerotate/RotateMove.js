@@ -1,13 +1,10 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useContext } from "react";
 import {
   View,
   StyleSheet,
   PanResponder,
-  findNodeHandle,
-  Animated,
   ImageBackground,
   Image,
-  UIManager,
 } from "react-native";
 import layoutRef from "./layoutRef";
 const RotateMove = (props) => {
@@ -45,14 +42,14 @@ const RotateMove = (props) => {
       },
       onPanResponderMove: (e, gestureState) => {
         let angle = panMove(center1Pos, e, 0);
-        if (angle > 90 && angle < 270) {
+        if (angle > 75 && angle < 285) {
           return;
         }
         setrotateAngle({ angle: angle });
         angle1 = angle;
+        props.actionChange(angle, 2);
       },
       onPanResponderRelease: (e, gestureState) => {
-        console.log(angle1);
         let sin = Math.sin((angle1 * Math.PI) / 180); //求sin
         let cos = Math.cos((angle1 * Math.PI) / 180); //求cos
         let dx = lineInfo.height * sin; //根据sin =对边/斜边   对边 = 斜边 * sin
@@ -73,10 +70,14 @@ const RotateMove = (props) => {
       onPanResponderMove: (e, gestureState) => {
         let angle = panMove(center2Pos, e, angle1 + 90);
         angle += 90;
-        if (angle > 180 && angle < 360) {
+        if (angle > 360) {
+          angle -= 360;
+        }
+        if (angle < 15 || angle > 165) {
           return;
         }
         if (angle) setrotateAngle2({ angle: angle });
+        props.actionChange(angle, 3);
       },
       onPanResponderRelease: (e, gestureState) => {
         isChildMove = false;

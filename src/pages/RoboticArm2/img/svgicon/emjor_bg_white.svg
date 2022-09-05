@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="58px" height="58px" viewBox="0 0 58 58" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>btn_control_bg_a_nor</title>
+    <defs>
+        <linearGradient x1="50.2794881%" y1="98.8853551%" x2="50%" y2="8.58688121e-15%" id="linearGradient-1">
+            <stop stop-color="#FFFFFF" offset="0%"></stop>
+            <stop stop-color="#FFFFFF" offset="64.4870695%"></stop>
+            <stop stop-color="#F2FBFF" offset="100%"></stop>
+        </linearGradient>
+        <path d="M29,2 C43.9116882,2 56,14.0883118 56,29 C56,43.9116882 43.9116882,56 29,56 C14.0883118,56 2,43.9116882 2,29 C2,14.0883118 14.0883118,2 29,2 Z" id="path-2"></path>
+        <filter x="-10.2%" y="-10.2%" width="120.4%" height="120.4%" filterUnits="objectBoundingBox" id="filter-4">
+            <feGaussianBlur stdDeviation="2" in="SourceAlpha" result="shadowBlurInner1"></feGaussianBlur>
+            <feOffset dx="0" dy="-1" in="shadowBlurInner1" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0.704504533   0 0 0 0 0.772308606   0 0 0 0 0.862149004  0 0 0 1 0" type="matrix" in="shadowInnerInner1" result="shadowMatrixInner1"></feColorMatrix>
+            <feGaussianBlur stdDeviation="2" in="SourceAlpha" result="shadowBlurInner2"></feGaussianBlur>
+            <feOffset dx="0" dy="5" in="shadowBlurInner2" result="shadowOffsetInner2"></feOffset>
+            <feComposite in="shadowOffsetInner2" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner2"></feComposite>
+            <feColorMatrix values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1  0 0 0 1 0" type="matrix" in="shadowInnerInner2" result="shadowMatrixInner2"></feColorMatrix>
+            <feGaussianBlur stdDeviation="0.5" in="SourceAlpha" result="shadowBlurInner3"></feGaussianBlur>
+            <feOffset dx="0" dy="-1" in="shadowBlurInner3" result="shadowOffsetInner3"></feOffset>
+            <feComposite in="shadowOffsetInner3" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner3"></feComposite>
+            <feColorMatrix values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1  0 0 0 0.273546766 0" type="matrix" in="shadowInnerInner3" result="shadowMatrixInner3"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixInner1"></feMergeNode>
+                <feMergeNode in="shadowMatrixInner2"></feMergeNode>
+                <feMergeNode in="shadowMatrixInner3"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="小四足操控" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="小四足操控-切图" transform="translate(-52.000000, -190.000000)">
+            <g id="btn/小四足/技能备份" transform="translate(52.000000, 190.000000)">
+                <mask id="mask-3" fill="white">
+                    <use xlink:href="#path-2"></use>
+                </mask>
+                <g id="矩形">
+                    <use fill="url(#linearGradient-1)" fill-rule="evenodd" xlink:href="#path-2"></use>
+                    <use fill="black" fill-opacity="1" filter="url(#filter-4)" xlink:href="#path-2"></use>
+                    <path stroke="#333333" stroke-width="1" d="M29,1.5 C36.5939153,1.5 43.4689153,4.57804234 48.4454365,9.55456352 C53.4219577,14.5310847 56.5,21.4060847 56.5,29 C56.5,36.5939153 53.4219577,43.4689153 48.4454365,48.4454365 C43.4689153,53.4219577 36.5939153,56.5 29,56.5 C21.4060847,56.5 14.5310847,53.4219577 9.55456352,48.4454365 C4.57804234,43.4689153 1.5,36.5939153 1.5,29 C1.5,21.4060847 4.57804234,14.5310847 9.55456352,9.55456352 C14.5310847,4.57804234 21.4060847,1.5 29,1.5 Z"></path>
+                </g>
+                <path d="M42.0284053,0.328427125 L38.5129338,5.25008721 C38.315598,5.52634906 38.0377781,5.71910634 37.7298161,5.81300767 C37.4218569,5.9069082 37.083756,5.90195435 36.7658549,5.78279464 C34.1772366,4.8124959 31.5884921,4.32842712 29,4.32842712 C26.4115035,4.32842712 23.8227547,4.81249753 21.2341377,5.78279742 C20.9162324,5.90195452 20.5781277,5.90690657 20.2701665,5.81300292 C19.9622075,5.71909996 19.6843914,5.52634259 19.4870608,5.25007975 L19.4870608,5.25007975 L15.9715947,0.328427125 L42.0284053,0.328427125 Z" id="矩形备份" stroke="#CCCCCC" mask="url(#mask-3)" transform="translate(29.000000, 3.328427) rotate(-720.000000) translate(-29.000000, -3.328427) "></path>
+            </g>
+        </g>
+    </g>
+</svg>

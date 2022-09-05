@@ -1,21 +1,21 @@
-import React, { Component, createContext } from "react";
+import React, { Component } from "react";
 import { View, Text, ImageBackground, Image, StyleSheet } from "react-native";
 import Camera from "./camera/index";
 import FooterIcons from "./footerIcons/index";
 import Rotate from "./rotate/index";
-import Doublerotate from "./doublerotate/index";
-import arm from "./arm.json";
+import Doublerotate2 from "./doublerotate2/index";
+import twoboneArm from "./twoboneArm.json";
 export default class RoboticArm extends Component {
   state = {
-    structure: arm.STRUCTURE,
-    actions: arm.ACTIONS,
-    officialbuttons: arm.OFFICIALBUTTONS,
+    structure: twoboneArm.STRUCTURE,
+    actions: twoboneArm.ACTIONS,
+    officialbuttons: twoboneArm.OFFICIALBUTTONS,
     actIndex: null,
   };
 
   //滑动方向盘， 添加actinidex
-  actionChange = (angle, index) => {
-    console.log(angle, index);
+  actionSteeringWheel = (index) => {
+    this.setState({ actIndex: index });
   };
   //打开摄像头
   openCameraHanlder = (flag) => {
@@ -44,11 +44,8 @@ export default class RoboticArm extends Component {
         </ImageBackground>
         {/* middle */}
         <View style={styles.middleContainer}>
-          <Rotate
-            actionChange={this.actionChange}
-            actionSteeringWheel={this.actionSteeringWheel}
-          ></Rotate>
-          <Doublerotate actionChange={this.actionChange}></Doublerotate>
+          <Rotate actionSteeringWheel={this.actionSteeringWheel}></Rotate>
+          <Doublerotate2></Doublerotate2>
         </View>
         {/* footer */}
         <View style={styles.footerContainer}>

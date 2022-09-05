@@ -32,7 +32,6 @@ class Slider extends Component {
       return true;
     },
     //开始手势操作。给用户一些视觉反馈，让他们知道发生了什么事情！
-    onPanResponderGrant: (e, gestureState) => {},
     onPanResponderMove: (event, gestureState) => {
       let x = gestureState.dx;
       let panX = this.lastX + x;
@@ -43,6 +42,7 @@ class Slider extends Component {
         panX = -this.sliderBlockMaxWidth;
       }
       this.setState({ pan: panX });
+      this.props.actionChange(panX, 4);
     },
 
     onPanResponderRelease: (e, gestureState) => {
@@ -58,10 +58,12 @@ class Slider extends Component {
         style={{
           position: "absolute",
           left: 8,
-          bottom: 0,
+          bottom: 2,
           flexDirection: "row",
           alignItems: "center",
           justifyContent: "space-between",
+          borderTopColor: "#e2e2e2",
+          borderTopWidth: 1,
         }}
       >
         <View
@@ -111,6 +113,16 @@ class Slider extends Component {
         </View>
         <Image
           style={{ width: 40, height: 40 }}
+          source={require("./img/icon_horizontal_arm.png")}
+        ></Image>
+        <Image
+          style={{
+            width: 40,
+            height: 40,
+            position: "absolute",
+            top: -40,
+            right: 0,
+          }}
           source={require("./img/icon_horizontal_arm.png")}
         ></Image>
       </View>
