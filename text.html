@@ -16,7 +16,6 @@
 <body>
 	<!-- 刻度尺容器(必要的) -->
 	<div class="ruler-wrap" id="ruler"></div>
-
 	<!-- 刻度尺容器(必要的) -->
 	<div class="ruler-wrap" style="width: 90%;" id="ruler2"></div>
 
@@ -100,7 +99,7 @@
 				var cxt = canvas.getContext("2d");
 
 				if (window.devicePixelRatio) {
-					canvas.width = window.devicePixelRatio * winWidth;
+					canvas.width = window.devicePixelRatio * winWidth; //Window.devicePixelRatio显示设备的物理像素分辨率与CSS像素分辨率之比
 					canvas.height = window.devicePixelRatio * initParams.height;
 					cxt.scale(window.devicePixelRatio, window.devicePixelRatio);
 				}
@@ -279,6 +278,8 @@
 			startValue: 20,
 			maxScale: 600,
 			height: 20,
+			region: [0, 600], //选择刻度的区间范围
+
 			background: "#f5f5f5",
 			success: function (res) {
 				console.log(res);
